@@ -33,5 +33,5 @@ jobs:
           git config --local user.email ${{ secrets.username }}
           git config --local user.name ${{ secrets.email }}
           git add .
-          git commit -m "Automated data preprocessing"
+          git commit -m "Automated data preprocessing" || echo "clean nothing to commit"
           git push origin main
