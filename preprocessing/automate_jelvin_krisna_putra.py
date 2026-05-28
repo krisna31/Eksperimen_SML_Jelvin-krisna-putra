@@ -39,7 +39,7 @@ The data
 Pada tahap ini, Anda perlu mengimpor beberapa pustaka (library) Python yang dibutuhkan untuk analisis data dan pembangunan model machine learning atau deep learning.
 """
 
-import kagglehub
+# import kagglehub
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -63,82 +63,82 @@ Jika dataset berupa unstructured data, silakan sesuaikan dengan format seperti k
 df = pd.read_csv('../employee_churn_data_raw.csv')
 df.head(10)
 
-"""# **4. Exploratory Data Analysis (EDA)**
+# """# **4. Exploratory Data Analysis (EDA)**
 
-Pada tahap ini, Anda akan melakukan **Exploratory Data Analysis (EDA)** untuk memahami karakteristik dataset.
+# Pada tahap ini, Anda akan melakukan **Exploratory Data Analysis (EDA)** untuk memahami karakteristik dataset.
 
-Tujuan dari EDA adalah untuk memperoleh wawasan awal yang mendalam mengenai data dan menentukan langkah selanjutnya dalam analisis atau pemodelan.
-"""
+# Tujuan dari EDA adalah untuk memperoleh wawasan awal yang mendalam mengenai data dan menentukan langkah selanjutnya dalam analisis atau pemodelan.
+# """
 
-df.info()
+# df.info()
 
-"""> no mission value for all the column ✅"""
+# """> no mission value for all the column ✅"""
 
-df.describe(include='all')
+# df.describe(include='all')
 
-"""## cek distribusi dari kolom y (left)"""
+# """## cek distribusi dari kolom y (left)"""
 
-sns.countplot(x='left', data=df)
-plt.title('Distribusi Karyawan yang Keluar (Target)')
-plt.show()
+# sns.countplot(x='left', data=df)
+# plt.title('Distribusi Karyawan yang Keluar (Target)')
+# plt.show()
 
-print(df['left'].value_counts(normalize=True))
+# print(df['left'].value_counts(normalize=True))
 
-"""> kolom Y di sini tidak rata yah, lebih banyak yang Y secara realita ini baik karena artinya dari 100% karyawan ada sekitar 70% yang memilih bertahan dan tidak resign
+# """> kolom Y di sini tidak rata yah, lebih banyak yang Y secara realita ini baik karena artinya dari 100% karyawan ada sekitar 70% yang memilih bertahan dan tidak resign
 
-> plan nya adalah kita akan menggunakan class_weight='balanced' dengan random forest, stratify=y saat split agar proporse target tetap 70:30, dan kita akan mengutamakan metrik Recall karena kita ingin agar model dapat menangkap karyawan yang "ingin" resign (meminimalkan false negative) namun kita tetap menampilkan metrik lainnya precision dan F1-Score serta akurasi jika dibutuhkan
+# > plan nya adalah kita akan menggunakan class_weight='balanced' dengan random forest, stratify=y saat split agar proporse target tetap 70:30, dan kita akan mengutamakan metrik Recall karena kita ingin agar model dapat menangkap karyawan yang "ingin" resign (meminimalkan false negative) namun kita tetap menampilkan metrik lainnya precision dan F1-Score serta akurasi jika dibutuhkan
 
-## distribusi fitur numerik (quantitative)
-"""
+# ## distribusi fitur numerik (quantitative)
+# """
 
-fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-sns.histplot(df['satisfaction'], kde=True, ax=axes[0,0]).set_title('Distribusi Kepuasan')
-sns.histplot(df['review'], kde=True, ax=axes[0,1]).set_title('Distribusi Hasil Review')
-sns.histplot(df['avg_hrs_month'], kde=True, ax=axes[1,0]).set_title('Distribusi Jam Kerja/Bulan')
-sns.boxplot(x=df['tenure'], ax=axes[1,1]).set_title('Boxplot Masa Kerja (Tenure)')
-plt.tight_layout()
-plt.show()
+# fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+# sns.histplot(df['satisfaction'], kde=True, ax=axes[0,0]).set_title('Distribusi Kepuasan')
+# sns.histplot(df['review'], kde=True, ax=axes[0,1]).set_title('Distribusi Hasil Review')
+# sns.histplot(df['avg_hrs_month'], kde=True, ax=axes[1,0]).set_title('Distribusi Jam Kerja/Bulan')
+# sns.boxplot(x=df['tenure'], ax=axes[1,1]).set_title('Boxplot Masa Kerja (Tenure)')
+# plt.tight_layout()
+# plt.show()
 
-"""> overall bagus yah satifaction dan review distribusi normal
+# """> overall bagus yah satifaction dan review distribusi normal
 
-> avg_hrs_month ini distribusi dengan dua puncak
+# > avg_hrs_month ini distribusi dengan dua puncak
 
-> tenure tidak ada outlier
+# > tenure tidak ada outlier
 
-## cek hubungan 2 variable
-"""
+# ## cek hubungan 2 variable
+# """
 
-sns.countplot(x='promoted', hue='left', data=df)
-plt.title('Hubungan Promosi dengan Keputusan Keluar')
-plt.show()
+# sns.countplot(x='promoted', hue='left', data=df)
+# plt.title('Hubungan Promosi dengan Keputusan Keluar')
+# plt.show()
 
-plt.figure(figsize=(12, 5))
-sns.countplot(x='department', hue='left', data=df)
-plt.title('Turnover berdasarkan Departemen')
-plt.xticks(rotation=45)
-plt.show()
+# plt.figure(figsize=(12, 5))
+# sns.countplot(x='department', hue='left', data=df)
+# plt.title('Turnover berdasarkan Departemen')
+# plt.xticks(rotation=45)
+# plt.show()
 
-sns.countplot(x='salary', hue='left', data=df, order=['low', 'medium', 'high'])
-plt.title('Turnover berdasarkan Tingkat Gaji')
-plt.show()
+# sns.countplot(x='salary', hue='left', data=df, order=['low', 'medium', 'high'])
+# plt.title('Turnover berdasarkan Tingkat Gaji')
+# plt.show()
 
-fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-sns.boxplot(x='left', y='satisfaction', data=df, ax=axes[0]).set_title('Kepuasan vs Left')
-sns.boxplot(x='left', y='avg_hrs_month', data=df, ax=axes[1]).set_title('Jam Kerja vs Left')
-sns.boxplot(x='left', y='review', data=df, ax=axes[2]).set_title('Review vs Left')
-plt.show()
+# fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+# sns.boxplot(x='left', y='satisfaction', data=df, ax=axes[0]).set_title('Kepuasan vs Left')
+# sns.boxplot(x='left', y='avg_hrs_month', data=df, ax=axes[1]).set_title('Jam Kerja vs Left')
+# sns.boxplot(x='left', y='review', data=df, ax=axes[2]).set_title('Review vs Left')
+# plt.show()
 
-"""review vs left: yang keluar cenderung adalah karyawan dengan review yang baik atau ada yang mendekati 1.0
+# """review vs left: yang keluar cenderung adalah karyawan dengan review yang baik atau ada yang mendekati 1.0
 
-## hubungan lebih dari 1 var
-"""
+# ## hubungan lebih dari 1 var
+# """
 
-numerical_cols = df.select_dtypes(include=['float64', 'int64']).columns
+# numerical_cols = df.select_dtypes(include=['float64', 'int64']).columns
 
-plt.figure(figsize=(8, 6))
-sns.heatmap(df[numerical_cols].corr(), annot=True, cmap='coolwarm', fmt='.2f')
-plt.title('Matriks Korelasi Fitur Numerik')
-plt.show()
+# plt.figure(figsize=(8, 6))
+# sns.heatmap(df[numerical_cols].corr(), annot=True, cmap='coolwarm', fmt='.2f')
+# plt.title('Matriks Korelasi Fitur Numerik')
+# plt.show()
 
 """> karena tenure dan avg_hrs_month saling bergantung satu sama lain makan nanti akan di drop agar tidak merusak interpretabilitas model kita
 
@@ -231,7 +231,7 @@ df.info()
 > ref: https://medium.com/@megha.natarajan/scaling-data-before-or-after-train-test-split-35e9a9a7453f
 """
 
-folder_name = 'namadataset_preprocessing'
+folder_name = 'employee_churn_data_preprocessing'
 os.makedirs(folder_name, exist_ok=True)
 X = df.drop(columns=['left'])
 y = df['left']
@@ -250,4 +250,5 @@ X_test.to_csv(os.path.join(folder_name, 'X_test_scaled.csv'), index=False)
 y_train.to_csv(os.path.join(folder_name, 'y_train.csv'), index=False)
 y_test.to_csv(os.path.join(folder_name, 'y_test.csv'), index=False)
 
-!ls {folder_name}
+# !ls {folder_name}
+print(f"successful saved to the {folder_name}")
